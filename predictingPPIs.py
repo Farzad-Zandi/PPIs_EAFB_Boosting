@@ -1,5 +1,6 @@
 ## Farzad Zandi, 2023.
-# Predicting Protein Protein Interactions.
+# Predicting Protein-Protein Interactions.
+# Predicting PPIs with Boosting algorithms.
 
 # Import requaried libraries.
 from multiprocessing import pool
@@ -36,11 +37,9 @@ warnings.filterwarnings('ignore')
 # Load data.
 print("Farzad Zandi, 2023.")
 print("Predicting Protein Protein Iteractions.")
+
 print("Loading Data...")
-# dataset = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\H.pylori\\XGBoost\\AD.csv')
-# dataset = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\Fusion.csv')
-dataset = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\S.cerevisiae\\Fusion\\Fusion.csv')
-# dataset = pd.read_csv('D:\\AD.csv')
+dataset = pd.read_csv('/Extracted Features/AD.csv')
 N = dataset.shape[1]-1
 target = dataset.iloc[:,N]
 dataset = dataset.drop(dataset.columns[N], axis=1)
@@ -50,13 +49,13 @@ print("Data Dimension: ", dataset.shape)
 # Tarin and Test Split.
 predictors = dataset
 target = pd.DataFrame(target)
+
 print("Normalizing Data...")
-# predictors = preprocessing.normalize(predictors)
 predictors = preprocessing.minmax_scale(predictors, feature_range=(0,1))
 predictors = pd.DataFrame(predictors)
 
 # K Fold Cross Validation.
-k = 10
+k = 5
 kf = KFold(n_splits = k, shuffle=True, random_state = 100)
 i = 1
 # Initializing Metric variables.
@@ -67,6 +66,7 @@ f1Score_xgb = []; f1Score_lgb = []; f1Score_cb = []; f1Score_ab = []; f1Score_lg
 senScore_xgb = []; senScore_lgb = []; senScore_cb = []; senScore_ab = []; senScore_lgbm = []; senScore_snap = []; senScore_voting = []
 speScore_xgb = []; speScore_lgb = []; speScore_cb = []; speScore_ab = []; speScore_lgbm = []; speScore_snap = []; speScore_voting = []
 mccScore_xgb = []; mccScore_lgb = []; mccScore_cb = []; mccScore_ab = []; mccScore_lgbm = []; mccScore_snap = []; mccScore_voting = []
+
 print("Performing", k, "Fold Cross Validation...")
 # Fitting & Predicting Model by K Fold.
 for trainIDX, testIDX in kf.split(predictors):
@@ -173,6 +173,7 @@ for trainIDX, testIDX in kf.split(predictors):
     speScore_voting.append((cm[1,1]/(cm[1,0]+cm[1,1]))*100)
     mccScore_voting.append(matthews_corrcoef(yPred, yTest)*100)
     i = i + 1
+    
 # Calculating Mean Metrics.
 
 methods = ['XGBoost', 'LogitBoost', 'CatBoost', 'AdaBoost', 'LightGBM', 'SnapBoost', 'Voting']
@@ -191,6 +192,7 @@ Ada = [round(accuracy[3],2), round(precision[3],2), round(recall[3],2), round(f1
 LGBM = [round(accuracy[4],2), round(precision[4],2), round(recall[4],2), round(f1score[4],2), round(sensivity[4],2), round(specifity[4],2), round(mathCorr[4],2)]
 Snap = [round(accuracy[5],2), round(precision[5],2), round(recall[5],2), round(f1score[5],2), round(sensivity[5],2), round(specifity[5],2), round(mathCorr[5],2)]
 Voting = [round(accuracy[6],2), round(precision[6],2), round(recall[6],2), round(f1score[6],2), round(sensivity[6],2), round(specifity[6],2), round(mathCorr[6],2)]
+
 results = pd.DataFrame(XGB, columns=['XGB'])
 results['LGB'] = LGB
 results['Cat'] = Cat
@@ -200,12 +202,5 @@ results['SnapBoost'] = Snap
 results['Voting'] = Voting
 
 # Save Results to CSV file.
-results.to_csv("D:\\LightGBMresultsAD.csv")
+results.to_csv("/LightGBMresultsAD.csv")
 
-# Visualizing.
-#sns.set(rc = {'figure.figsize':(15,8)})
-#plt.xlabel('Methods')
-#plt.ylabel('Accuracy Score')
-#ax = sns.barplot(methods, Accuracy)
-#ax.bar_label(ax.containers[0])
-#plt.show()
