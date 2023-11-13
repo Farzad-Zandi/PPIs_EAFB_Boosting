@@ -1,5 +1,9 @@
 ## Farzad Zandi, 2023.
-# Feature selection with Artificial feeding birds.
+# Embedded Artificial Feeding Birds feature selection.
+# Feature selection by Artificial Feeding Birds and Embedded Artificial Feeding Birds using Boosting algorithms.
+# FS() function is Embedded step for Artificial Feeding Birds feature selection.
+# To run without Embedded step, disable FS() function.
+
 from array import array
 from ctypes import sizeof
 from operator import truediv
@@ -25,9 +29,10 @@ import xgboost as xgb
 import lightgbm as LightGBM
 from sklearn.decomposition import PCA, KernelPCA
 from sklearn.pipeline import Pipeline
+from snapml import BoostingMachineClassifier as SnapBoostClassifier
 
 print('Farzad Zandi, 2023.')
-print('Feature selection with Artificial Feeding Birds.')
+print('Feature selection with Embedded Artificial Feeding Birds.')
 # Loading Data.
 print('Loading data...')
 data = pd.read_csv('D:\\Research\\Thesis\\myCodes\\Extracted Features\\H.pylori\\Fusion\\AD.csv')
@@ -45,9 +50,11 @@ k = 5 # 5 Flod cross validation.
 teta = 0.8 # Feature importance.
 [M, N] = data.shape # Data Dimension.
 
+# Fly function.
 def fly():
     return np.random.randint(2, size=(N))
 
+# Walk function.
 def walk(X, n, i):
     j = round(random.uniform(1, n-1))
     while j==i:
@@ -66,25 +73,12 @@ def walk(X, n, i):
             X[i,j] = 0
     return X
 
+# Embedded step for Artificial Feeding Birds feature selection.
 def fs(x):
     idx = np.where(np.array(x)==1)[0]
     xTrain, xTest, yTrain, yTest = train_test_split(data, label, test_size=0.2, random_state=0, shuffle=True)
     xTrain = xTrain.iloc[:, idx]
     xTest = xTest.iloc[:, idx]
-
-    # xTrain, xTest, yTrain, yTest = train_test_split(data, label, test_size=0.2, random_state=0, shuffle=True)    
-    # trainPool = Pool(xTrain, yTrain)
-    # testPool = Pool(xTest, yTest)   
-    # t1 = time.time() 
-    # model = CatBoostClassifier(
-    #     iterations=40, random_seed=0, depth=10, 
-    #     loss_function='Logloss', learning_rate=1, 
-    #     task_type='CPU', od_type='Iter', early_stopping_rounds=5, rsm=0.001)
-    # summary = model.select_features(
-    #     trainPool, eval_set=testPool, features_for_select=list(idx),
-    #     num_features_to_select= round(sum(x==1)/2), train_final_model=True,
-    #     algorithm=EFeaturesSelectionAlgorithm.RecursiveByShapValues,
-    #     shap_calc_type= EShapCalcType.Regular, logging_level='Silent')    
     
     ## LogitBoost.    
     # lgb = LogitBoost(n_estimators = 100)
@@ -104,6 +98,11 @@ def fs(x):
     idxNew = ada.feature_importances_>np.mean(ada.feature_importances_)
     idxNew = idx[idxNew]
 
+    ## SnapBoost.
+    snap = SnapBoostClassifier(n_estimators=100)
+    snap.fit(xTrain, np.array(yTrain).ravel())
+    idxNew = snap.feature_importances_>np.mean(snap.feature_importances_)
+    idxNew = idx[idxNew]
     
     ## CatBoost.
     # cb = CatBoostClassifier(
@@ -112,7 +111,6 @@ def fs(x):
     # cb.fit(xTrain, yTrain)
     # idxNew = cb.feature_importances_>np.mean(cb.feature_importances_)
     # idxNew = idx[idxNew]
-
     
     ## LightGBM
     # lgbm = LightGBM.LGBMClassifier(n_estimators=100)
@@ -125,6 +123,7 @@ def fs(x):
     x[idxNew] = 1
     return x
 
+# Cost function.
 def cost(x):
     idx = np.where(np.array(x)==1)[0]
     cv = KFold(n_splits=5, random_state=0, shuffle=True)
@@ -134,7 +133,7 @@ def cost(x):
     # acc = cross_val_score(lgb, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
     
     ## XGBoost.
-    # xgb_model = xgb.XGBClassifier(objective='binary:logistic')
+    # xgb_model = xgb.XGBClassifier(n_estimators=100)
     # acc = cross_val_score(xgb_model, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
     
     ## AdaBoost.
@@ -142,15 +141,17 @@ def cost(x):
     acc = cross_val_score(ada, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
     
     ## CatBoost.
-    # cb = CatBoostClassifier(
-    #     iterations=40, depth=10, verbose=False, loss_function='Logloss',
-    #     learning_rate=1, od_type='Iter', early_stopping_rounds=5)
+    # cb = CatBoostClassifier()
     # acc = cross_val_score(cb, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
     
     ## LightGBM
     # lgbm = LightGBM.LGBMClassifier(n_estimators=100)
     # acc = cross_val_score(lgbm, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
 
+    ## SnapBoost
+    # snap = SnapBoostClassifier(n_estimators=100)
+    # acc = cross_val_score(snap, data.iloc[:,idx], np.array(label).ravel(), scoring='accuracy', cv=cv)
+    
     acc = np.mean(acc)
     fit = (teta*acc + (1-teta)*(1-(sum(np.array(x)==1))/N))    
     
@@ -167,6 +168,7 @@ fitnessNew = array('f', [])
 X = np.empty((0,N), float) # pigs positions.
 m = array('i',[])
 s = array('i',[])
+
 for i in range(pigs):
     sT = time.time()
     x = np.array(fly()) # Initializing pig position.
