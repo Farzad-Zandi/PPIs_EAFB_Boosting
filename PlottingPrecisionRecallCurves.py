@@ -1,5 +1,6 @@
 ## Farzad Zandi, 2023.
-# Ploting Precision Recall Curves for Predinting Protein Protein INteractions.
+# Ploting Precision Recall Curves for Predinting Protein-Protein Interactions.
+
 # Importing requaired libraries.
 import os
 import warnings
@@ -30,21 +31,10 @@ warnings.filterwarnings('ignore')
 print("Farzad Zandi, 2023.")
 print("Predicting Protein Protein Iteractions.")
 # print("Generating ROC Curve by XGBBoost...")
-# print("Generating ROC Curve by AdaBoost...")
-# print("Generating ROC Curve by LogitBoost...")
-# print("Generating ROC Curve by CatBoost...")
-# print("Generating ROC Curve by SnapBoost...")
 
 # Loading AD.
 print("Loading AD...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\AD.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\AD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\AD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\AD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\AD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\CatBoost\\AD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\AD.csv')
-
+data = pd.read_csv('/Extracted Features/AD.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -98,12 +88,7 @@ plt.plot(meanRE, meanPR, label='AD (AUC= %0.2f)' % (meanAUC*100))
 # Loading BLOSUM.
 print("=====================================")
 print("Loading BLOSUM...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\BLOSUM.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\BLOSUM.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\BLOSUM.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\BLOSUM.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\BLOSUM.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\BLOSUM.csv')
+data = pd.read_csv('/Extracted Features/BLOSUM.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -157,12 +142,7 @@ plt.plot(meanRE, meanPR, label='BLOSUM (AUC= %0.2f)' % (meanAUC*100))
 # Loading CT.
 print("=====================================")
 print("Loading CT...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\CT.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\CT.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\CT.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\CT.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\CT.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\CT.csv')
+data = pd.read_csv('/Extracted Features/CT.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -216,12 +196,7 @@ plt.plot(meanRE, meanPR, label='CT (AUC= %0.2f)' % (meanAUC*100))
 # Loading C-T-D.
 print("=====================================")
 print("Loading C-T-D...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\CTD.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\CTD.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\C-T-D.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\C-T-D.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\C-T-D.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\C-T-D.csv')
+data = pd.read_csv('/Extracted Features/CTD.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -275,12 +250,7 @@ plt.plot(meanRE, meanPR, label='C-T-D (AUC= %0.2f)' % (meanAUC*100))
 # Loading DC.
 print("=====================================")
 print("Loading DC...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\DC.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\DC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\DC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\DC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\DC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\DC.csv')
+data = pd.read_csv('/Extracted Features/DC.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -334,12 +304,7 @@ plt.plot(meanRE, meanPR, label='DC (AUC= %0.2f)' % (meanAUC*100))
 # Loading DDE.
 print("=====================================")
 print("Loading DDE...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\DDE.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\DDE.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\DDE.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\DDE.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\DDE.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\DDE.csv')
+data = pd.read_csv('/Extracted Features/DDE.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -393,12 +358,7 @@ plt.plot(meanRE, meanPR, label='DDE (AUC= %0.2f)' % (meanAUC*100))
 # Loading PseAAC.
 print("=====================================")
 print("Loading PseAAC...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\PseAAC.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\PseAAC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\PseAAC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\PseAAC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\PseAAC.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\PseAAC.csv')
+data = pd.read_csv('/Extracted Features/PseAAC.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -452,12 +412,7 @@ plt.plot(meanRE, meanPR, label='PseAAC (AUC= %0.2f)' % (meanAUC*100))
 # Loading QSO.
 print("=====================================")
 print("Loading QSO...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\QSO.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\QSO.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\QSO.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\QSO.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\QSO.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\QSO.csv')
+data = pd.read_csv('/Extracted Features/QSO.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -511,12 +466,7 @@ plt.plot(meanRE, meanPR, label='QSO (AUC= %0.2f)' % (meanAUC*100))
 # Loading Fusion.
 print("=====================================")
 print("Loading Fusion...")
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Extracted Features\\H.pylori\\fusion\\Fusion.csv')
-data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB_no_FS\\S.cerevisiae\\XGBoost\\Fusion.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\XGBoost\\Fusion.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\AdaBoost\\FusionReductTrain.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\LogitBoost\\FusionReduct.csv')
-# data = pd.read_csv('D:\\Thesis\\myCodes\\Selected Features\\AFB\\SnapBoost\\FusionReduct.csv')
+data = pd.read_csv('/Extracted Features/Fusion.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
