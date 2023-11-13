@@ -55,3 +55,33 @@ for (i in 1:dim(proteinPA)[1])
   blosum <- rbind(blosum, out)
 }
 
+ad = as.data.frame(ad)
+write.csv(ad,'/AD.csv')
+
+blosum = as.data.frame(blosum)
+write.csv(blosum,'/BLOSUM.csv')
+
+ct = as.data.frame(ct)
+write.csv(ct,'/CT.csv')
+
+ctd = as.data.frame(ctd)
+write.csv(ctd,'/CTD.csv')
+
+dc = as.data.frame(dc)
+write.csv(dc,'/DC.csv')
+
+dde = as.data.frame(dde)
+write.csv(dde,'/DDE.csv')
+
+pseaac = as.data.frame(pseaac)
+write.csv(pseacc,'/PseAAC.csv')
+
+qso = as.data.frame(qso)
+write.csv(qso,'/QSO.csv')
+
+
+
+
+
+
+
