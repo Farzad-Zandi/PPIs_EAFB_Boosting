@@ -35,8 +35,7 @@ print('Farzad Zandi, 2023.')
 print('Feature selection with Embedded Artificial Feeding Birds.')
 # Loading Data.
 print('Loading data...')
-data = pd.read_csv('D:\\Research\\Thesis\\myCodes\\Extracted Features\\H.pylori\\Fusion\\AD.csv')
-# data = pd.read_csv('D:\Thesis\\myCodes\\Selected Features\\dataRelieff.csv', header=None)
+data = pd.read_csv('/Extracted Features//AD.csv')
 N = data.shape[1]-1
 label = data.iloc[:,N]
 data = data.drop(data.columns[N], axis=1)
@@ -228,7 +227,7 @@ dataReduct = data.iloc[:,idx]
 idx = pd.DataFrame(idx, columns=['idx'])
 idx.to_csv("D:\\idxAD.csv")
 dataReduct['label'] = label
-dataReduct.to_csv("D:\\AD.csv")
+dataReduct.to_csv("/Results/reductAD.csv")
 
 
 
