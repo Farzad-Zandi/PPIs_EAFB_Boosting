@@ -1,5 +1,9 @@
 ## Farzad Zandi, 2023.
 # Extracting Protein Features.
+# Extracting protein features from amino acids sequences.
+# Extracting Autocorrelation Descriptors, Blocks of Amino Acid Substitution Matrix,
+# Conjoint Triad, Composition Transition Distribution, Dipeptide Composition, 
+# Dipeptide Deviation from Expected Mean value, Pseudo Amino Acid Composition and Quasi Sequence Order features.
 
 rm(list=ls())
 library(protr)
